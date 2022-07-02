@@ -1,0 +1,10 @@
+export { default as OtrixDivider } from './OtrixComponent/OtrixDivider';
+export { default as OtrixContent } from './OtrixComponent/OtrixContent.js';
+export { default as OtrixContainer } from './OtrixComponent/OtrixContainer.js';
+export { default as OtrixHeader } from './OtrixComponent/OtrixHeader.js';
+export { default as OtrixSocialContainer } from './OtrixComponent/OtrixSocialContainer.js';
+export { default as OtrixNotfoundComponent } from './OtrixComponent/OtrixNotfoundComponent.js';
+export { default as SearchBar } from './HomeComponent/SearchBar';
+export { default as OtirxBackButton } from './OtrixComponent/OtirxBackButton.js';
+export { default as OtrixAlert } from './OtrixComponent/OtrixAlert.js';
+export { default as OtrixLoader } from './OtrixComponent/OtrixLoader.js';
