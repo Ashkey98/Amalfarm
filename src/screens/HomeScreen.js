@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useRef} from "react";
 import {
     View,
     TouchableOpacity,
     Text,
     StyleSheet,
     Image,
-    Dimensions
+    Dimensions,
+    DrawerLayoutAndroid
 } from "react-native";
 import { connect } from 'react-redux';
 
@@ -26,6 +27,7 @@ import getApi from "@apis/getApi";
 import { ASSETS_DIR } from '@env';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 const { width: screenWidth } = Dimensions.get('window')
+import menu from "../common/config"
 
 function HomeScreen(props) {
     const [state, setState] = React.useState({ homePageData: [], loading: false, profileImageURL: null });
@@ -34,6 +36,7 @@ function HomeScreen(props) {
         slider2,
         slider3
     ];
+    const drawer = useRef(null);
     const addToWish = async (id) => {
         let wishlistData = await _addToWishlist(id);
         props.addToWishList(wishlistData, id);
@@ -76,15 +79,36 @@ function HomeScreen(props) {
             </View>
         );
     }
-
+    const navigationView = () => (
+        <View style={[styles.container, styles.navigationContainer]}>
+      <Text style={styles.paragraph}>I'm in the Drawer!</Text>
+      <TouchableOpacity
+      style={{width:50,height:50,backgroundColor:"blue",borderRadius:50}}
+        title="Close drawer"
+        onPress={() => drawer.current.closeDrawer()}
+      />
+    </View>
+      );
     return (
+        <DrawerLayoutAndroid
+        ref={drawer}
+        drawerWidth={300}
+        drawerPosition={"left"}
+        renderNavigationView={navigationView}
+      >
         <OtrixContainer customStyles={{ backgroundColor: Colors.white }}>
             {/* Header */}
             <OtrixHeader >
                 <TouchableOpacity style={styles.headerLeft} onPress={() => props.navigation.navigate('ProfileScreen')}>
-
                 </TouchableOpacity>
-
+                <TouchableOpacity
+             title="Open drawer"
+             onPress={() => drawer.current.openDrawer()}
+        >
+      <Image
+        source={menu} style={styles.menu}
+      />
+      </TouchableOpacity>
                 <View style={styles.headerCenter}>
                     <Text style={styles.headingTxt}>AmalFarm</Text>
                 </View>
@@ -247,6 +271,7 @@ function HomeScreen(props) {
                 </View>
             </View>
         </OtrixContainer >
+  </DrawerLayoutAndroid>
     )
 }
 
@@ -408,5 +433,25 @@ const styles = StyleSheet.create({
         fontSize: wp('3.5%'),
         marginHorizontal: wp('6%')
 
-    }
+    },
+    container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 16
+      },
+      navigationContainer: {
+        backgroundColor: "#ecf0f1"
+      },
+      paragraph: {
+        padding: 16,
+        fontSize: 15,
+        textAlign: "center"
+      },
+      menu:{
+    width:50,
+    height:30,
+    backgroundColor:"red",
+    borderRadius:50
+      }
 });
