@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { GlobalStyles, Colors} from '@helpers'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {
-    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
+    OtrixContainer, OtrixHeader, OtrixContent,OtirxBackButton, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
 } from '@component';
 
 import { cropDetails } from '@common';
@@ -61,7 +61,7 @@ function SoilTesting(props){
         <OtrixContainer customStyles={{ backgroundColor: Colors.white }}>
              {/* Header */}
         <OtrixHeader >
-                <TouchableOpacity style={GlobalStyles.headerLeft} onPress={() => props.navigation.goBack()}>
+                <TouchableOpacity style={{paddingLeft:25}} onPress={() => props.navigation.goBack()}>
                 <OtirxBackButton />
 
                 </TouchableOpacity>
@@ -166,7 +166,7 @@ function SoilTesting(props){
                             variant="solid"
                             bg={Colors.themeColor}
                             style={styles.button}
-                            onPress={() => alert("Crop Saved")}
+                            onPress={() => openCamera()}
                         >
                             <Text style={GlobalStyles.buttonText}>Click Here</Text>
                         </Button>

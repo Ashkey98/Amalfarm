@@ -174,7 +174,7 @@ function RegisterScreen(props) {
             {/* Content Start from here */}
             <OtrixContent>
 
-                {/* <TouchableOpacity style={styles.imageView}
+                <TouchableOpacity style={styles.imageView}
                     onPress={() => launchImageLibrary(
                         {
                             mediaType: 'photo',
@@ -194,7 +194,7 @@ function RegisterScreen(props) {
                     {profileImage == null && <Image source={avatarImg} style={styles.image}></Image>}
 
 
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <OtrixDivider size={'sm'} />
 
                 {/* Registration Form Start from here */}
@@ -238,6 +238,21 @@ function RegisterScreen(props) {
 
                 </FormControl>
                 <OtrixDivider size={'sm'} />
+
+                <FormControl style={{ backgroundColor: Colors.white }} isRequired isInvalid={submited && 'block' in errors}>
+                    <Input variant="outline" placeholder="Email" style={GlobalStyles.textInputStyle}
+                        onChangeText={(value) => { setData({ ...formData, submited: false, block: value }), delete errors.email }}
+                    />
+                    <FormControl.ErrorMessage
+                        leftIcon={<InfoOutlineIcon size="xs" />}
+                    >
+                        {errors.email}
+                    </FormControl.ErrorMessage>
+                </FormControl>
+
+                <OtrixDivider size={'sm'} />
+
+
                 <FormControl style={{ backgroundColor: Colors.white }} isRequired={true} isInvalid={submited && 'password' in errors}>
                     <Input variant="outline" placeholder="Password" style={GlobalStyles.textInputStyle}
                         onChangeText={(value) => { setData({ ...formData, submited: false, password: value }), delete errors.password }}
@@ -271,7 +286,7 @@ function RegisterScreen(props) {
                         {errors.cpassword}
                     </FormControl.ErrorMessage>
                 </FormControl>
-                {/* <OtrixDivider size={'md'} />
+                <OtrixDivider size={'md'} />
                 <FormControl style={{ backgroundColor: Colors.white }} isRequired isInvalid={submited && 'block' in errors}>
                     <Input variant="outline" placeholder="Block Name" style={GlobalStyles.textInputStyle}
                         onChangeText={(value) => { setData({ ...formData, submited: false, block: value }), delete errors.block }}
@@ -337,7 +352,7 @@ function RegisterScreen(props) {
                         {errors.pincode}
                     </FormControl.ErrorMessage>
                 </FormControl>
-                <OtrixDivider size={'md'} /> */}
+                <OtrixDivider size={'md'} />
                 <OtrixDivider size={'md'} />
                 <Button
                     size="md"
@@ -400,6 +415,9 @@ const styles = StyleSheet.create({
         height: undefined,
         aspectRatio: 1,
         width: wp('20%'),
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderRadius: 63,
+
     },
+   
 });

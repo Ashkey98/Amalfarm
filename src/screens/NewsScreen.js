@@ -1,45 +1,84 @@
-import React, { useEffect } from "react";
+import React, { Component } from 'react';
+import { FlatList } from 'react-native';
+import Article from '../component/News/Article';
+// import { getUSANews } from '../utils/fetchNews';
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { GlobalStyles, Colors} from '@helpers';
 import {
+    Text,
     View,
+    ImageBackground,
     StyleSheet,
-    TouchableOpacity
-} from "react-native";
-import {
-    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
+    TextInput,
+    Image
+  } from 'react-native';
+  import {
+    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader,OtirxBackButton
 } from '@component';
-import { Input, Text, FormControl, Button, InfoOutlineIcon } from "native-base"
-import { connect } from 'react-redux';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { GlobalStyles, Colors, isValidEmail, isValidpassword } from '@helpers'
-import Icon from 'react-native-vector-icons/Ionicons';
-import { logfunction } from "@helpers/FunctionHelper";
-import Fonts from "../helpers/Fonts";
-import { bindActionCreators } from 'redux';
-import { doLogin } from '@actions';
-import getApi from "@apis/getApi";
-import Toast from 'react-native-root-toast';
 
-function NewsScreen(props) {
-
-    const [formData, setData] = React.useState({ email: null, password: null, submited: false, loading: false, type: null, message: null, navTo: 'HomeScreen' });
-    const [state, setDatapassword] = React.useState({ secureEntry: true });
-    const [errors, setErrors] = React.useState({});
-    const { email, password, submited, loading, message, type, navTo } = formData;
-
-    useEffect(() => {
-
-    }, [
-        //   props.navigation.navigate('ProfileScreen')
-    ]);
+// import { getXMLResponse } from '../utils/fetchNews';
+// import Article from '../component/News/Article';
+import { XMLParser } from 'fast-xml-parser';
 
 
 
-    return (
-        <OtrixContainer customStyles={{ backgroundColor: Colors.white }}>
+class News extends Component {
+	state = {
+		articles: [],
+		refreshing: true
+	};
 
-            {/* Header */}
-            <OtrixHeader >
-                <TouchableOpacity style={GlobalStyles.headerLeft} onPress={() => props.navigation.goBack()}>
+	componentDidMount = () => {
+		fetch('https://www.google.com/alerts/feeds/01768412586991802709/7866738149434837200')
+		.then((response) => { 
+			console.log("mota response ", response)
+			return response.text();
+		})
+		.then((textResponse) => {
+			const options = {
+				ignoreAttributes : false
+			};
+			let parser = new XMLParser();
+			let obj = parser.parse(textResponse);
+			let jsonObj = JSON.stringify(obj)
+			// let fname = obj.person.fname;
+			// let lname = obj.person.lname;
+			// let phone = obj.person.contacts.personal.phone;
+			// this.setState({ fname: fname, lname: lname, phone: phone })
+			console.log("===========================???????",obj);
+		
+			this.setState({ articles: obj?.feed?.entry ,refreshing:false});
+			console.log("state=============>",obj);
+			
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+
+	};
+
+	fetchNews = () => {
+
+		// .then(articles => {
+		// 		this.setState({ articles, refreshing: false });
+		// 	})
+		// 	.catch(() => this.setState({ refreshing: false }));
+	};
+
+	//  getXMLResponse = () => {
+	
+	// }
+
+	handleRefresh = () => {
+		this.setState({ refreshing: true }, () => this.fetchNews());
+	};
+
+	render() {
+		console.log(this.state.articles);
+		return (
+            <OtrixContainer>
+             <OtrixHeader >
+                <TouchableOpacity style={{paddingLeft:25}} onPress={() => props.navigation.goBack()}>
                 <OtirxBackButton />
 
                 </TouchableOpacity>
@@ -47,57 +86,16 @@ function NewsScreen(props) {
                     <Text style={GlobalStyles.headingTxt}> GI News</Text>
                 </View>
             </OtrixHeader>
-            <OtrixDivider size={'md'} />
-
-            {/* Content Start from here */}
-            <OtrixContent>
-            <Text>This is Feed Screen</Text>
-            </OtrixContent>
-            {
-                message != null && <OtrixAlert type={type} message={message} />
-            }
-
-        </OtrixContainer >
-    )
-
+			<FlatList
+				data={this.state.articles}
+				renderItem={({ item }) =><Article article={item} />}
+				keyExtractor={item => item.url}
+				refreshing={this.state.refreshing}
+				onRefresh={this.handleRefresh}
+			/>
+            </OtrixContainer>
+		);
+	}
 }
 
-function mapStateToProps({ params }) {
-    return {}
-}
-
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
-        doLogin
-    }, dispatch)
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewsScreen);
-
-const styles = StyleSheet.create({
-    forgotPassword: {
-        fontSize: wp('3%'),
-        textAlign: 'right',
-        fontFamily: Fonts.Font_Reguler,
-        color: Colors.link_color,
-        padding: 5
-    },
-    registerView: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    registerTxt: {
-        fontSize: wp('3.5%'),
-        textAlign: 'center',
-        fontFamily: Fonts.Font_Reguler,
-        color: Colors.secondry_text_color
-    },
-    signupTxt: {
-        fontSize: wp('3.5%'),
-        textAlign: 'right',
-        fontFamily: Fonts.Font_Semibold,
-        color: Colors.link_color
-    },
-
-});
+export default News;

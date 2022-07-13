@@ -154,3 +154,11 @@ export function doLogout() {
         }
     }
 }
+
+export const getNewsFeed =
+() => (dispatch) => {
+      dispatch({
+        type: GET_NEWS_FEED,
+        payload: [],
+      });
+};

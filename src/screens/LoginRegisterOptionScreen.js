@@ -16,7 +16,7 @@ import { GlobalStyles, Colors, isValidEmail, isValidMobile, isValidpassword, isV
 import { logfunction } from "@helpers/FunctionHelper";
 import Fonts from "@helpers/Fonts";
 import getApi from "@apis/getApi";
-import { farm, splashlogo } from '@common';
+import { farm, applogo } from '@common';
 
 function LoginRegisterOptionScreen(props) {
     useEffect(() => {
@@ -34,11 +34,11 @@ function LoginRegisterOptionScreen(props) {
 
             {/* Content Start from here */}
             {/* <Image source={farm} resizeMode="contain" style={styles.image} /> */}
-            <ImageBackground source={farm} resizeMode="cover" style={styles.bgimage}>
+            <ImageBackground  style={styles.bgimage}>
 
                 <OtrixContent >
                     <OtrixDivider size={'md'} />
-                    <Image source={splashlogo} resizeMode="contain" style={[styles.image, { width: wp('55%'), height: hp('10%') }]} />
+                    <Image source={applogo} resizeMode="contain" style={[styles.image, { width: wp('55%'), height: hp('10%') }]} />
                     <OtrixDivider size={'md'} />
                     <View style={styles.innerContainer}>
 

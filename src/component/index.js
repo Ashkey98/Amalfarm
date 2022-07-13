@@ -5,6 +5,7 @@ export { default as OtrixHeader } from './OtrixComponent/OtrixHeader.js';
 export { default as OtrixSocialContainer } from './OtrixComponent/OtrixSocialContainer.js';
 export { default as OtrixNotfoundComponent } from './OtrixComponent/OtrixNotfoundComponent.js';
 export { default as SearchBar } from './HomeComponent/SearchBar';
-export { default as OtirxBackButton } from './OtrixComponent/OtirxBackButton.js';
+export { default as OtirxBackButton } from './OtrixComponent/OtirxBackButton';
+export { default as OtirxMenuButton } from './OtrixComponent/OtirxMenuButton';
 export { default as OtrixAlert } from './OtrixComponent/OtrixAlert.js';
 export { default as OtrixLoader } from './OtrixComponent/OtrixLoader.js';
