@@ -9,13 +9,12 @@ import {
     DrawerLayoutAndroid
 } from "react-native";
 import { connect } from 'react-redux';
-
+// import { Avatar } from 'react-native-paper';
 import {
     OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, SearchBar
 } from '@component';
 import { HomeSkeleton } from '@skeleton';
 import { addToWishList } from '@actions';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Colors, GlobalStyles } from '@helpers';
 import { bindActionCreators } from 'redux';
 import { Button, Badge, Avatar } from "native-base";
@@ -24,10 +23,15 @@ import Fonts from "@helpers/Fonts";
 import { _roundDimensions } from '@helpers/util';
 import { _addToWishlist, logfunction } from "@helpers/FunctionHelper";
 import getApi from "@apis/getApi";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 import { ASSETS_DIR } from '@env';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 const { width: screenWidth } = Dimensions.get('window')
-import menu from "../common/config"
+import drawerIcon from "../common/config"
+import { OtirxMenuButton } from "../component";
+import { applogo,logout } from '@common';
+
 
 function HomeScreen(props) {
     const [state, setState] = React.useState({ homePageData: [], loading: false, profileImageURL: null });
@@ -81,12 +85,76 @@ function HomeScreen(props) {
     }
     const navigationView = () => (
         <View style={[styles.container, styles.navigationContainer]}>
-      <Text style={styles.paragraph}>I'm in the Drawer!</Text>
-      <TouchableOpacity
+            <View >
+            <Image source={applogo} resizeMode="contain" style={[styles.image, { width: wp('55%'), height: hp('10%') }]} />
+
+            <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
+          <View style={{ height: hp('6%'),
+        width: wp('70%'),backgroundColor:"#f09132",borderRadius:10,alignItems:"center",justifyContent:"center",elevation:12}}>
+            {/* <Image
+                            square
+                            source={focused ? bottomProfileFill : bottomProfile}
+                            style={[styles.bottomTabIcon]}
+                        /> */}
+              <Text style={{fontSize:18,color:"white"}}>My Profile</Text>
+          </View>
+          </TouchableOpacity>
+            </View>
+     <View style={{paddingTop:18}}>
+     <TouchableOpacity onPress={() => props.navigation.navigate("RegisterFarmerScreen")}>
+          <View style={{ height: hp('6%'),
+        width: wp('70%'),backgroundColor:"#f09132",borderRadius:10,alignItems:"center",justifyContent:"center",elevation:12}}>
+              <Text style={{fontSize:18,color:"white"}}>Add Farmer</Text>
+          </View>
+      </TouchableOpacity>
+     </View>
+     <View style={{paddingTop:20}}>
+     <TouchableOpacity>
+          <View style={{ height: hp('6%'),
+        width: wp('70%'),backgroundColor:"#f09132",borderRadius:10,alignItems:"center",justifyContent:"center",elevation:12}}>
+              <Text style={{fontSize:15,color:"white"}}>Authorized User Registration Process</Text>
+          </View>
+      </TouchableOpacity>
+     </View>
+     <View style={{paddingTop:20}}>
+     <TouchableOpacity>
+          <View style={{ height: hp('6%'),
+        width: wp('70%'),backgroundColor:"#f09132",borderRadius:10,alignItems:"center",justifyContent:"center",elevation:12}}>
+              <Text style={{fontSize:15,color:"white"}}>New GI Registration Process</Text>
+          </View>
+      </TouchableOpacity>
+     </View>
+
+     <View style={{paddingTop:20}}>
+     <TouchableOpacity onPress={() => props.navigation.navigate("CropSummaryScreen")}>
+          <View style={{ height: hp('6%'),
+        width: wp('70%'),backgroundColor:"#f09132",borderRadius:10,alignItems:"center",justifyContent:"center",elevation:12}}>
+              <Text style={{fontSize:18,color:"white"}}>Crop Summary</Text>
+          </View>
+      </TouchableOpacity>
+     </View>
+
+     <View style={{paddingTop:20}}>
+     <TouchableOpacity onPress={() => props.navigation.navigate("SettingScreen")}>
+          <View style={{ height: hp('6%'),
+        width: wp('70%'),backgroundColor:"#f09132",borderRadius:10,alignItems:"center",justifyContent:"center",elevation:12}}>
+              <Text style={{fontSize:18,color:"white"}}>Settings</Text>
+          </View>
+      </TouchableOpacity>
+     </View>
+
+     <View style={{paddingTop:hp('20%')}}>
+     <TouchableOpacity onPress={() => props.navigation.navigate("SettingScreen")}>
+     <Image source={logout} resizeMode="contain" style={[styles.image, { width: wp('20%'), height: hp('10%') }]} />
+    
+      </TouchableOpacity>
+     </View>
+                    
+      {/* <TouchableOpacity
       style={{width:50,height:50,backgroundColor:"blue",borderRadius:50}}
         title="Close drawer"
         onPress={() => drawer.current.closeDrawer()}
-      />
+      /> */}
     </View>
       );
     return (
@@ -100,15 +168,21 @@ function HomeScreen(props) {
             {/* Header */}
             <OtrixHeader >
                 <TouchableOpacity style={styles.headerLeft} onPress={() => props.navigation.navigate('ProfileScreen')}>
+
                 </TouchableOpacity>
-                <TouchableOpacity
+          
+            {/* <Image
+        source={drawerIcon} style={{height: 100, width: 100} }   tintColor='black'
+      /> */}
+<View style={{right:30}}>
+<TouchableOpacity
              title="Open drawer"
              onPress={() => drawer.current.openDrawer()}
         >
-      <Image
-        source={menu} style={styles.menu}
-      />
-      </TouchableOpacity>
+<OtirxMenuButton />
+</TouchableOpacity>
+
+</View>
                 <View style={styles.headerCenter}>
                     <Text style={styles.headingTxt}>AmalFarm</Text>
                 </View>
@@ -437,21 +511,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center",
-        padding: 16
+        padding: 16,
+        width:"100%",
+      
       },
       navigationContainer: {
-        backgroundColor: "#ecf0f1"
+        backgroundColor: "#ecf0f1",
+        display:"flex",
+        flexDirection:'column',
+        backgroundColor:"#aecef5"
+
       },
       paragraph: {
         padding: 16,
         fontSize: 15,
         textAlign: "center"
       },
-      menu:{
-    width:50,
-    height:30,
-    backgroundColor:"red",
-    borderRadius:50
-      }
+   
 });

@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import {
     View,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground,
+    Image,
 } from "react-native";
 import {
-    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
+    OtrixContainer,OtirxBackButton, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
 } from '@component';
 import { Input, Text, FormControl, Button, InfoOutlineIcon } from "native-base"
 import { connect } from 'react-redux';
@@ -16,8 +18,12 @@ import { logfunction } from "@helpers/FunctionHelper";
 import Fonts from "../helpers/Fonts";
 import { bindActionCreators } from 'redux';
 import { doLogin } from '@actions';
+import { loginpage } from '@common';
+
 import getApi from "@apis/getApi";
 import Toast from 'react-native-root-toast';
+import CropDetails from "./CropDetails";
+import OtrixEditButton from "../component/OtrixComponent/OtrixEditButton";
 
 function ProfileScreen(props) {
 
@@ -70,26 +76,54 @@ function ProfileScreen(props) {
                 <View style={[GlobalStyles.headerCenter, { flex: 1 }]}>
                     <Text style={GlobalStyles.headingTxt}>Profile</Text>
                 </View>
+                <TouchableOpacity onPress={() =>props.navigation.navigate('RegisterScreen')}>
+                    <OtrixEditButton/>
+                </TouchableOpacity>
             </OtrixHeader>
-             <OtrixDivider size={'md'} />
-
-{/* Content Start from here */}
+            <ImageBackground source={loginpage} style={styles.bgimage} >
+                {/* Content Start from here */}
 <OtrixContent>
+<View style={styles.header}>
+<View style={styles.headerContent}>
+                <Image style={styles.avatar}
+                  source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
 
+<View style={styles.innerContainer}>
+    <Text style={{fontSize:20,color:"white",fontWeight:"bold"}}>First Name: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Last Name: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Mobile Number : <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Village: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Email: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Block Name: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Panchayat: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>Village: <Text> Ashish</Text></Text>
+    <OtrixDivider size={'sm'} />
+    <Text style={{fontSize:20, color:"white",fontWeight:"bold",}}>District: <Text> Ashish</Text></Text>
     
 
-
-
+    
+            </View>    
+            </View> 
+            </View>
 
     <OtrixDivider size={'sm'} />
 
     {/* Registration Form Start from here */}
     
-    
-
-    
-
+ 
 </OtrixContent>
+            </ImageBackground>
+
+             <OtrixDivider size={'md'} />
+             
+
         </OtrixContainer>
 
     )
@@ -132,5 +166,35 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         width: wp('20%'),
         alignSelf: 'center'
-    }
+    },
+    bgimage: {
+        height: hp('100%'),
+    },
+    avatar: {
+        width: wp('20%'),
+        height: hp('10%'),
+        borderRadius: 63,
+        borderWidth: 4,
+        borderColor: "white",
+        paddingTop:25
+      },
+      headerContent:{
+        padding:30,
+        alignItems: 'center',
+      },
+      
+      name:{
+        fontSize:22,
+        color:"#000000",
+        fontWeight:'600',
+      },
+      innerContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0, 0.6)',
+        padding: wp('5%'),
+        marginTop: hp('8%'),
+        borderRadius: 10,
+        width:wp('80%'),
+        alignItems:"center"
+    },
 });

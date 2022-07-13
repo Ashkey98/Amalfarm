@@ -32,6 +32,11 @@ export const news_fill = require('../assets/images/news_fill.png')
 export const agriculture = require('../assets/images/agriculture.png')
 export const agriculture_fill = require('../assets/images/agriculture_fill.png')
 export const cropDetails = require('../assets/images/cropDetails.jpg')
+export const news_placeholder = require('../assets/images/news-placeholder.png')
+export const drawerIcon = require('../assets/images/drawer.png')
+export const applogo = require('../assets/images/appLogo.png')
+export const edit = require('../assets/images/edit.png')
+export const logout = require('../assets/images/logout.png')
 // export const soilTesting = require('../assets/images/soilTesting.jpg')
 
 //social images

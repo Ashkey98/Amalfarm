@@ -16,6 +16,8 @@ import { Badge } from "native-base"
 import Fonts from './helpers/Fonts';
 import { _roundDimensions } from './helpers/util';
 import SoilTesting from './screens/SoilTesting';
+import CropSummaryScreen from './screens/CropSummaryScreen';
+import Settings from './screens/SettingsScreen';
 const SettingStack = createStackNavigator();
 export const navigationRef = createNavigationContainerRef()
 let cartCount = 0;
@@ -118,7 +120,7 @@ function AppNavigator(props) {
     return (
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator initialRouteName="SplashScreen">
-                <Stack.Screen name='SplashScreen' component={SplashScreen}
+                <Stack.Screen name='SplashScreen' component={MyTabs}
                     options={{
                         headerShown: false,
                     }}
@@ -162,6 +164,12 @@ function AppNavigator(props) {
                  <Stack.Screen name="SoilTesting" component={SoilTesting} options={{
                     headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 }} />
+                 <Stack.Screen name="CropSummaryScreen" component={CropSummaryScreen} options={{
+                    headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }} />
+                {/* <Stack.Screen name="SettingScreen" component={Settings} options={{
+                    headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }} /> */}
 
 
             </Stack.Navigator>

@@ -6,7 +6,7 @@ import {
     Image
 } from "react-native";
 import {
-    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixAlert, OtrixLoader
+    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixAlert, OtrixLoader,OtirxBackButton,
 } from '@component';
 import { Input, Text, FormControl, Button, InfoOutlineIcon } from "native-base"
 import { connect } from 'react-redux';

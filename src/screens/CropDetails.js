@@ -14,21 +14,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { GlobalStyles, Colors} from '@helpers'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {
-    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
+    OtrixContainer, OtrixHeader, OtrixContent,OtirxBackButton, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
 } from '@component';
 
 import { cropDetails } from '@common';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntIcon from 'react-native-vector-icons/AntDesign'
-import DatePicker from 'react-native-datepicker'
+// import DatePicker from 'react-native-datepicker'
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 
 
 function CropDetails(props){
+    
     const [formData, setData] = React.useState({ isFocus });
     const [imageUri, setImageUri] = useState('')
     const { isFocus,optionSelect } = formData;
+    const [isPickerShow, setIsPickerShow] = useState(false);
+    const [date, setDate] = useState(new Date(Date.now()));
+   
+    const showPicker = () => {
+        setIsPickerShow(true);
+      };
+
+      const onChange = (event, value) => {
+        setDate(value);
+        if (Platform.OS === 'android') {
+          setIsPickerShow(false);
+        }
+      };
+    
 
     const openCamera = () => {
         let options = {
@@ -59,7 +76,7 @@ function CropDetails(props){
         <OtrixContainer customStyles={{ backgroundColor: Colors.white }}>
              {/* Header */}
         <OtrixHeader >
-                <TouchableOpacity style={GlobalStyles.headerLeft} onPress={() => props.navigation.goBack()}>
+                <TouchableOpacity style={{paddingLeft:25}} onPress={() => props.navigation.goBack()}>
                 <OtirxBackButton />
 
                 </TouchableOpacity>
@@ -107,8 +124,32 @@ function CropDetails(props){
                         placeholder="Crop Area"
                         keyboardType="numeric"
       />
-                      <OtrixDivider size={'md'} />  
-                      <DatePicker
+                      <OtrixDivider size={'md'} /> 
+
+                      <View style={styles.pickedDateContainer}>
+        <Text style={styles.pickedDate}>{date.toUTCString()}</Text>
+        {/* The button that used to trigger the date picker */}
+      {!isPickerShow && (
+        <View style={styles.btnContainer}>
+          <Button title="Show Picker" color="orange" onPress={showPicker} />
+        </View>
+      )}
+      </View>
+
+      
+
+{isPickerShow && (
+        <DateTimePicker
+          value={date}
+          mode={'date'}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          is24Hour={true}
+          onChange={onChange}
+          style={styles.datePicker}
+        />
+      )}
+   
+                      {/* <DatePicker
                     style={styles.input}
                     // date={this.state.date}
                     mode="date"
@@ -131,7 +172,7 @@ function CropDetails(props){
                     // ... You can check the source to find the other keys.
                     }}
                     // onDateChange={(date) => {this.setState({date: date})}}
-                />
+                /> */}
                 <OtrixDivider size={'md'} />  
 
                  <TextInput
@@ -157,7 +198,7 @@ function CropDetails(props){
                             variant="solid"
                             bg={Colors.themeColor}
                             style={styles.button}
-                            onPress={() => alert("Crop Saved")}
+                            onPress={() => openCamera()}
                         >
                             <Text style={GlobalStyles.buttonText}>Click Here</Text>
                         </Button>
@@ -173,7 +214,7 @@ function CropDetails(props){
                             variant="solid"
                             bg={Colors.themeColor}
                             style={styles.button}
-                            onPress={() => alert("Crop Saved")}
+                            onPress={() => openCamera()}
                         >
                             <Text style={GlobalStyles.buttonText}>Click Here</Text>
                         </Button>
@@ -248,7 +289,28 @@ const styles = StyleSheet.create({
     },
     button:{
         width:wp('30%')
-    }
+    },
+    pickedDateContainer: {
+        height:hp('8%'),
+        width: wp('82%'),
+        padding: 20,
+        borderRadius: 8,
+        borderWidth: 0.5,
+        backgroundColor:Colors.white,
+        display:'flex',
+        flexDirection:"row",
+        justifyContent:"space-between"
+
+      },
+      pickedDate: {
+        fontSize: 15,
+        color: 'black',
+      },
+      btnContainer: {
+        background:"orange",
+        height:hp('8%'),
+        width:wp('2%')
+      },
     
    
 })

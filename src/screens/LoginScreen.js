@@ -3,10 +3,11 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    Image
 } from "react-native";
 import {
-    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader
+    OtrixContainer, OtrixHeader, OtrixContent, OtrixDivider, OtrixSocialContainer, OtrixAlert, OtrixLoader,OtirxBackButton
 } from '@component';
 import { Input, Text, FormControl, Button, InfoOutlineIcon } from "native-base"
 import { connect } from 'react-redux';
@@ -19,7 +20,7 @@ import { bindActionCreators } from 'redux';
 import { doLogin } from '@actions';
 import getApi from "@apis/getApi";
 import Toast from 'react-native-root-toast';
-import { loginpage } from '@common';
+import { loginpage, applogo } from '@common';
 // import FBSDK, { LoginManager } from 'react-native-fbsdk';
 // const { AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
 // import {
@@ -330,9 +331,14 @@ function LoginScreen(props) {
                     <Text style={GlobalStyles.headingTxt}> Sign In</Text>
                 </View>
             </OtrixHeader>
+
+            
             <ImageBackground source={loginpage} style={styles.bgimage} >
 
                 <OtrixDivider size={'md'} />
+                <OtrixDivider size={'md'} />
+                    <Image source={applogo} resizeMode="contain" style={[styles.image, { width: wp('60%'), height: hp('20%') }]} />
+                    <OtrixDivider size={'md'} />
                 {/* Content Start from here */}
                 <OtrixContent>
                     {/* Login Form Start from here */}
@@ -467,5 +473,11 @@ const styles = StyleSheet.create({
         color: Colors.white,
         textAlign: 'center',
         marginVertical: hp('2%')
-    }
+    },
+    image: {
+        resizeMode: 'cover',
+        alignSelf: 'center',
+        height: hp('25%'),
+        width: wp('100%'),
+    },
 });

@@ -13,5 +13,6 @@ export { default as LoginScreenOTP } from './LoginScreenOTP.js';
 export { default as ProfileScreen } from './ProfileScreen.js';
 export { default as NewsScreen } from './NewsScreen.js';
 export { default as CropAdvisoryScreen } from './CropAdvisoryScreen.js';
+export { default as CropSummaryScreen } from './CropSummaryScreen.js';
 export { default as CropDetails } from './CropDetails.js';
 export { default as RegisterFarmerScreen } from './RegisterFarmerScreen.js';
